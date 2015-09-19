@@ -9,7 +9,12 @@ function scanDictionary(operateFun, path)
     for i = 3 : length(list);
         % if the ith element is a dictionary
         if ( list(i).isdir)
-            newPath = [path, '\', list(i).name];
+            name = list(i).name;
+            if( strcmp(name, '.git') == 1)
+                continue;
+            end
+            
+            newPath = [path, '\', name];
            
             % recursive the function of scanDictionary
             scanDictionary(operateFun, newPath);

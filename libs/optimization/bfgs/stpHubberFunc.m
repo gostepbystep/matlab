@@ -1,24 +1,40 @@
-function [out] = stpHubberFunc(x)
+function [f, g] = stpHubberFunc(x)
 % hubber function 
-% 注意 globalA, b, 还有threshold必须都已经存在
+    
+    % get the global value
     global globalA globalB threshold;
-   
     
-    vr = abs(globalA * x - globalB);
+    % initial
+    z = globalA * x - globalB;
     sum = 0;
-    
     n = length(globalB);
     
     for i = 1 : n
-        r = vr(i, 1);
+        r = abs( z(i, 1) );
         
+        % calculate the function value
         if (r>=0 && r<=threshold)
             sum = sum + r*r/(2*threshold);
         else
             sum = sum + (r - threshold/2);
         end
         sum = sum + r;
+        
+        % calculate the gradient
+        temp = z(i, 1) / threshold;
+        if( temp > 1)
+            temp = 1;
+        end
+        
+        if(temp < -1)
+            temp = -1;
+        end
+        
+        % save ith gradient to vector z
+        z(i, 1) = temp;
     end
     
-    out = sum;
+    f = sum;
+    g = globalA' * z;
+%     g = mb_numDiff(@stpTemp, x);
 end

@@ -1,12 +1,24 @@
-function [out] = stpOneNormFunc(x)
-% hubber function 
-% 注意 globalA, b, 还有threshold必须都已经存在
-    global globalA globalB threshold;
-   
-    
-    vr = abs(globalA * x - globalB);
-    
+function [f, g] = stpOneNormFunc(x)
+%% one norm function
+    global globalA globalB;
+ 
     n = length(globalB);
+    z = globalA * x -globalB;
     
-    out = sum(vr);
+    f = sum( abs(z) );
+    
+    % calculate the gradient
+    for i = 1 : n
+        temp = z(i, 1);
+        
+        if( temp >= 0)
+            temp = 1;
+        else
+            temp = -1;
+        end
+        
+        z(i, 1) = temp;
+    end
+    
+    g = globalA' * z;
 end

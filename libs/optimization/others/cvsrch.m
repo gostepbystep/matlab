@@ -221,7 +221,7 @@
 %        and compute the directional derivative.
 %
          x = wa + stp * s;
-         [f,g] = feval(fcn,n,x);
+         [f,g] = fcn(x);
          nfev = nfev + 1;
          dg = g' * s;
          ftest1 = finit + stp*dgtest;

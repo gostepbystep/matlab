@@ -4,12 +4,15 @@ x = R; G = GMatrix; d = SeismicAngleTraceVector;
 
 dimention = length(x);
 
-f = 0.2;[b,a] = butter(10, f, 'low');
+f = 0.1;[b,a] = butter(10, f, 'low');
 x1 = filtfilt(b, a, x(1:dimention/3));x2 = filtfilt(b, a,x(dimention/3+1:2*dimention/3));x3 = filtfilt(b, a, x(2*dimention/3+1:dimention));
 x0=[x1;x2;x3];  % 初始化 X
-x_initial = R;
+x_initial = x0;
 
-iters = [50];
+f = 0.7;[b,a] = butter(10, f, 'low');
+d = filtfilt(b, a, d);
+
+iters = [20];
 
 path = fileparts( mfilename('fullpath') );
 picPath = [path, '\\对比图\\实际数据\\'];
@@ -22,11 +25,11 @@ globalA = G;
 globalB = d;
 threshold = th;
 gloabalTheta = 0.4;
-
-xn = R;
-x0 = x_initial;
-A = G;
-B = d;
+% 
+% xn = R;
+% x0 = x_initial;
+% A = G;
+% B = d;
 
 % save realSesmicData xn x0 A B;
 
@@ -37,7 +40,7 @@ for i = 1 : length(iters)
     for j = 1 : 1
         if j == 1
              type = 'bfgs';
-             [out] = stpMinBFGS('stpCombMixFunc', 'stpCombMixGFunc', x_initial, iterNum);
+             [out] = stpMinBFGS(@stpHubberFunc, x_initial, iterNum);
         else
             type = '最速下降法';
             [out] = stpMinSDLinearEqual(G, x_initial, d, iterNum, true);
