@@ -1,6 +1,7 @@
       function [x,f,g,stp,info,nfev] ...
        = cvsrch(fcn,n,x,f,g,s,stp,ftol,gtol,xtol, ...
                  stpmin,stpmax,maxfev)
+       
 %   Translation of minpack subroutine cvsrch
 %   Dianne O'Leary   July 1991
 %     **********
@@ -144,7 +145,7 @@
       xtrapf = 4;
       info = 0;
       infoc = 1;
-
+      nfev = 0;
 %
 %     Check the input parameters for errors.
 %
@@ -166,7 +167,7 @@
 %
       brackt = 0;
       stage1 = 1;
-      nfev = 0;
+      
       finit = f;
       dgtest = ftol*dginit;
       width = stpmax - stpmin;

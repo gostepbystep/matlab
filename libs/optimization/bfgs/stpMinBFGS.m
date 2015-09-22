@@ -29,6 +29,9 @@ function [xOut] = stpMinBFGS( fun, x0, maxk)
             break;     
         end 
 
+        if( k == 39 )
+            k = k+0;
+        end
         % «Û»°dk
         dk = -Bk * gk;  
         
@@ -39,8 +42,8 @@ function [xOut] = stpMinBFGS( fun, x0, maxk)
         %     function [x,f,g,stp,info,nfev] ...
         %        = cvsrch(fcn,n,x,f,g,s,stp,ftol,gtol,xtol, ...
         %                  stpmin,stpmax,maxfev)
-        [xOut, ~, gnew, ~, ~, ~] ...
-           = cvsrch(@stpHubberFunc, n, x0,  fk, gk, dk, 1, 0.0001, ...
+        [xOut, ~, gnew, ~, ~, nfev] ...
+           = cvsrch(fun, n, x0,  fk, gk, dk, 1, 0.0001, ...
                     0.9, 1e-8,0, inf, 20);
 
        %%

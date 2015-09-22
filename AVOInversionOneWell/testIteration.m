@@ -2,6 +2,8 @@
 
 x = R; G = GMatrix; d = SeismicAngleTraceVector;  
 
+fprintf('norm(Gx - d) = %f', norm(G*x-d));
+
 dimention = length(x);
 
 f = 0.1;[b,a] = butter(10, f, 'low');
@@ -9,8 +11,7 @@ x1 = filtfilt(b, a, x(1:dimention/3));x2 = filtfilt(b, a,x(dimention/3+1:2*dimen
 x0=[x1;x2;x3];  % 初始化 X
 x_initial = x0;
 
-f = 0.7;[b,a] = butter(10, f, 'low');
-d = filtfilt(b, a, d);
+% d = filtfilt(b, a, d);
 
 iters = [20];
 
@@ -20,11 +21,13 @@ picPath = [path, '\\对比图\\实际数据\\'];
 createDir(picPath);
 
 th = max(abs(d)) / 100;
-global globalA globalB threshold gloabalTheta;
+global globalA globalB threshold gloabalTheta globalx thresholdx;
 globalA = G;
 globalB = d;
 threshold = th;
-gloabalTheta = 0.4;
+thresholdx = max(abs(x_initial)) / 100;
+gloabalTheta = 0.7;
+globalx = R;
 % 
 % xn = R;
 % x0 = x_initial;
@@ -48,7 +51,7 @@ for i = 1 : length(iters)
         
         x0 = out;
        
-        r = out-x_initial;
+        r = out - R;
         r = r' * r
 
         figure;

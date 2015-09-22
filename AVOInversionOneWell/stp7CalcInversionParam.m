@@ -17,8 +17,8 @@ function [tVp tVs tRho GMatrix R SeismicAngleTraceVector LsFitLpCoefficient LdFi
 %     tVs( tVs(:, 1) > 2450, 1) = 2450;
 %     tVs( tVs(:, 1) < 2300, 1 ) = 2300;
 %     tVs( tVs(75:80, 1) > 2450, 1 ) = 2450;
-% 
-%     f = 0.4;    [b, a] = butter(10, f, 'low');
+% % 
+%     f = 0.7;    [b, a] = butter(10, f, 'low');
 %     tVp  = filtfilt(b, a, tVp); 
 %     tVs = filtfilt(b, a, tVs); 
 %     tRho = filtfilt(b, a, tRho); 

@@ -20,7 +20,7 @@ function [synthRecord, outWelllog, ricker] = stp3Synthetic(postSeisData, sWell, 
     N = 512; 
     j = 0 : N - 1; 
     [sampNum, ~] = size(postSeisData);
-    centerPos = sampNum / 2;
+    centerPos = 45;%sampNum / 2;
 
     Fs = 1000.0 / dt; %采样频率   
     % 从子波的上下部分各取20个点进行傅里叶变换
@@ -28,6 +28,7 @@ function [synthRecord, outWelllog, ricker] = stp3Synthetic(postSeisData, sWell, 
     mag = sqrt(real(fr).^2 + imag(fr).^2);
     f = j * Fs / N;  
     freq = min( f(  mag(:, 1) == max(mag)  ) );
+%     freq = 15;
 
     %%
     % 生成子波
@@ -42,13 +43,13 @@ function [synthRecord, outWelllog, ricker] = stp3Synthetic(postSeisData, sWell, 
     end             
 
     % 生成矩阵
-    ricker = wavelet(index+1 : waveletNum);                     % 截取子波序列
+    ricker = wavelet(index : waveletNum);                     % 截取子波序列
+    
     [~, index] = max(ricker);
     wMatrix = convmtx(ricker, sampNum);                         % 使用卷积生成矩阵, 生成后矩阵大小是 
                                                                 % (length(ricker)+sampNum-1)*sampNum
     wMatrix = wMatrix(index : index+sampNum-1, :);              % 截取需要的部分，大小是sampNum*sampNum
-
-
+    
     sumWaveletGain = 0.0;                                       % 子波增益系数
 
     %%
@@ -87,12 +88,14 @@ function [synthRecord, outWelllog, ricker] = stp3Synthetic(postSeisData, sWell, 
 
         subRef = waveRef(upIndex : dowIndex, 1);                    % 取出这一段序列的反射系数
         synthSeis = wMatrix * subRef;                               % 合成了一个子波（这里实际上是子波和反射系数做卷积）
-
+% 
         % 通过相关，计算合成的地震记录和真实地震记录的相似度
         correlation = corrcoef(synthSeis, postSeisData(:, 1));
-
+        
         if correlation(1, 2) > maxCorrelation
-            maxCorrelation = correlation(1, 2);
+%             if error < maxCorrelation
+%             error
+            maxCorrelation = correlation(1, 2) ;
             bestIndex = index;
             synthRecord = synthSeis;
         end
@@ -107,6 +110,14 @@ function [synthRecord, outWelllog, ricker] = stp3Synthetic(postSeisData, sWell, 
     % 是合成记录的数量级与真实记录一样
     synthRecord  = synthRecord ./ waveletGain;
     ricker = ricker ./ waveletGain;
+    [row, col] = size(ricker); 
+    
+%     testRicker;
+%     ricker = rand(length(ricker), 1);
+    [error, ricker, synthRecord] = stpIterationRicker(ricker, postSeisData, outWelllog, sampNum);
+
+    path = fileparts(mfilename('fullpath'));
+    SaveTxtFile([path, '\\ricker.txt'], ricker, row, col); 
 
     %%
     % 绘制叠后数据和合成记录
@@ -130,4 +141,5 @@ function [synthRecord, outWelllog, ricker] = stp3Synthetic(postSeisData, sWell, 
     set(gca, 'ydir', 'reverse'); 
     set(gca, 'xlim', [1000 6000]);
     legend('Vp', 'Vs', 'Rho');
+    
 end
