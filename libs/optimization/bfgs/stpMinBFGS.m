@@ -25,7 +25,7 @@ function [xOut] = stpMinBFGS( fun, x0, maxk)
         [fk, gk] = fun(x0);   
         
         curNorm = norm(gk);
-        if(curNorm < eps)         
+        if(fk < eps)         
             break;     
         end 
 
