@@ -13,7 +13,7 @@ x_initial = x0;
 
 % d = filtfilt(b, a, d);
 
-iters = [20];
+iters = [200];
 
 path = fileparts( mfilename('fullpath') );
 picPath = [path, '\\对比图\\实际数据\\'];
@@ -41,9 +41,9 @@ for i = 1 : length(iters)
    
     % % [out,state] = BFGS(@stpBFGSObj,x_initial, iterNum, 1000, false);
     for j = 1 : 1
-        if j == 1
+        if j == 2
              type = 'bfgs';
-             [out] = stpMinBFGS(@stpHubberFunc, x_initial, iterNum);
+             [out] = stpMinBFGS(@stpCombMixFunc, x_initial, iterNum);
         else
             type = '最速下降法';
             [out] = stpMinSDLinearEqual(G, x_initial, d, iterNum, true);

@@ -8,7 +8,7 @@ N = 3;
 M = 3;
 
 %% ‘ÿ»ÎÕºœÒ
-path = 'E:\picture\cvx\bbs\';
+path = 'F:\picture\cvx\bbs\';
 name = ['1.jpg'; '2.jpg'; '3.jpg'];
 
 sdata = cell(1, N);
