@@ -1,7 +1,7 @@
 function [f, g] = stpMinDecisionFunc(x)
     f = stpMinFunc(x);
-    g = mb_numDiff(@stpMinFunc,x);
-
+    %g = mb_numDiff(@stpMinFunc,x);
+    g = [];
 end
 
 function [f] = stpMinFunc(x3)
