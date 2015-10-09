@@ -33,7 +33,7 @@ function [ out, cvx_optval] = stpCvxSvm(data, nSample, dim, type)
         
         minimize( norm(w, 2));
         subject to
-            y .* (x' * w) >= 1;
+            y .* (x' * w)>= 1;
         cvx_end
     else
         cvx_begin
@@ -45,7 +45,6 @@ function [ out, cvx_optval] = stpCvxSvm(data, nSample, dim, type)
             rho >= 0;
         cvx_end
     end
-    
     
     out = w;
 end

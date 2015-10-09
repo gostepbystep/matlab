@@ -36,9 +36,10 @@ function plotData( data, wn, dim)
         x = -5 : 0.1 : 5;
         
         % 绘制迭代过程 权重w的变化情况
-        startColor = [0.6, 1, 0.2];
-        endColor = [1, 0.2, 0.3];
+        startColor = [1, 1, 0.1];
+        endColor = [0.1, 0.1, 1];
         
+        shape = ['-', '+', 'o', 's', '-', '-','-','-','-','-','-','-'];
         for i = 1 : n
             w = wn(:, i);
             y = ( -w(3) - w(1)*x ) / w(2);
@@ -51,7 +52,8 @@ function plotData( data, wn, dim)
             
             color = (1-alpha) * startColor + alpha * endColor;
             hold on;
-            plot(x, y, 'Color', color, 'LineWidth', 1.3);
+            plot(x, y,  shape(i), 'Color', color, 'LineWidth', 1.3);
+%             plot(x, y, 'Color', color, 'LineWidth', 1.3);
         end
         axis([-5 5 -5 5]);
     end
