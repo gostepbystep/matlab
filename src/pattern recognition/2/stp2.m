@@ -14,22 +14,23 @@ dim = 3;
 coeff = {
         [-1.1 0.8; -1.5 0.7; 1.4 -0.9;], ...
         [-1.7 1; 1.6 -0.6; -1.5 1.0;]};
-    
-% % 二维情况
+%     
+% 二维情况
 % dim = 2;
 % coeff = {
-%         [2.0 0.8; -1.5 1.7;], ...
-%         [-1.7 1; 1.3 -0.6;]};
+%         [2.0 0.8; -1.8 0.9;], ...
+%         [-1.9 1; 1.9 -0.6;]};
     
 data = createSample(nSample, dim , coeff);
 
 %% 感知机算法
 nStep = 201;
-[wn1, ws, miss] = perceptron( data, nSample, dim, 0.001, nStep);
+[wn1, ws, miss] = perceptron( data, nSample, dim, 1, nStep);
 
 % 感知机算法绘图
 subplot(1, 2, 1);
 plot(1:nStep, miss);
+title('分错次数变化图');
 
 subplot(1, 2, 2);
 if dim == 2
@@ -47,6 +48,7 @@ if dim == 2
 end
 % 绘图
 plotData( data, wn1, dim);
+title('感知机线性分类器');
 
 %% 均方差算法
 [wn2, ww] = meanSquareError( data, nSample, dim);

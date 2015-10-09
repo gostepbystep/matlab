@@ -26,12 +26,14 @@ function [w, ws, miss] = perceptron( data, nSample, dim, alpha, nStep)
         ws(:, i) = w;                 % 存储当前w的值
         missNum = 0;
         
+        sum = zeros(dim+1, 1);
+        
         % 第一类分错统计
         for k = 1 : nSample(1)
             % 遍历当前组的第k个实例
             x = data1(:, k);
             if(w' * x < 0)
-                w = w + alpha * x;              % 修改w， 分错了x，（x属于第一类，本应该满足w'x > 0）
+                sum = sum + alpha * x;              % 修改w， 分错了x，（x属于第一类，本应该满足w'x > 0）
                 missNum = missNum + 1;
             end
         end
@@ -41,10 +43,12 @@ function [w, ws, miss] = perceptron( data, nSample, dim, alpha, nStep)
             % 遍历当前组的第k个实例
             x = data2(:, k);
             if(w' * x > 0)
-                w = w - alpha * x;
+                sum = sum - alpha * x;
                 missNum = missNum + 1;
             end
         end
+        
+        w = w + sum;
         
         miss(i) = missNum;
     end
