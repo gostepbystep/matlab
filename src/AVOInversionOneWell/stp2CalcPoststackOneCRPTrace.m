@@ -42,8 +42,10 @@ function [trData] = stp2CalcPoststackOneCRPTrace(fileName, inId, crossId)
             % 读取数据并累加
             data = stpReadTraceData(fin, volHeader.sampNum, volHeader.dataForm);
             trData = trData + data;
-            continue;
-
+            
+            if i ~= volHeader.traceNum
+                continue;
+            end
         elseif(isFind == true || i == volHeader.traceNum)
             % 表示已经遍历完所有的该反射点的道
             trData = trData / okTraceNum;
