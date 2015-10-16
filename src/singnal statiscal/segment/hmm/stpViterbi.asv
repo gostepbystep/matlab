@@ -1,0 +1,46 @@
+function [ maxProb, bestPath ] = stpViterbi(hmmModel, observe)
+%% hmm viterbi 算法的实现
+    % 观察值的数量
+    obNum = length(observe);
+
+    %% 初始化
+    weight = zeros(obNum, hmmModel.stateNum);
+    path = weight;
+    
+    probStart =
+    
+    for i = 1 : hmmModel.stateNum
+        weight(1, i) = hmmModel.probStart(i) + hmmModel.probEmit{i}(observe(1));
+    end
+    
+    %% 迭代
+    for k = 2 : obNum
+        for i = 1 : hmmModel.stateNum
+           %% 求weight(k, i)
+            maxWeight = -Inf;
+            maxIndex = -1;
+            
+            for j = 1 : hmmModel.stateNum
+                temp = weight(k-1, j) + hmmModel.probTrans(j, i);
+                if(maxWeight < temp)
+                    maxWeight = temp;
+                    maxIndex = j;
+                end
+            end
+            
+            weight(k, i) = temp + hmmModel.probEmit{i}(observe(k));
+            path(k, i) = maxIndex;
+        end
+        
+    end
+    
+    %% 终止
+    bestPath = zeros(1, obNum);
+    [maxProb bestPath(obNum)] = max(weight(obNum, :));
+    
+    for i = obNum-1 : 1
+        bestPath(i) = path(i+1, bestPath(i+1));
+    end
+    
+end
+

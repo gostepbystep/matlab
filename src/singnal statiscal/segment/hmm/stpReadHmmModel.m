@@ -1,4 +1,4 @@
-function [stateNum, probStart, probTrans, probEmit] = stpReadHmmModel( fileName )
+function [hmmModel] = stpReadHmmModel( fileName )
 %% 这是一个读取Hmm模型的函数
 %
 %% 输入
@@ -35,6 +35,7 @@ function [stateNum, probStart, probTrans, probEmit] = stpReadHmmModel( fileName 
                 info = textscan(str, '%d');
                 stateNum = info{1};
                 probEmit = cell(1, stateNum);
+                
             elseif step == 2
                 % 读取初始概率
                 formats = repmat(' %f', 1, stateNum);
@@ -58,7 +59,7 @@ function [stateNum, probStart, probTrans, probEmit] = stpReadHmmModel( fileName 
                 for i = 1 : length(data)
                     stri = data{i};
                     item = regexp(stri, ':', 'split');
-                    map(item{1}) = item{2};
+                    map(item{1}) = str2double(item{2});
                 end
                 
                 probEmit{k} = map;
@@ -69,6 +70,11 @@ function [stateNum, probStart, probTrans, probEmit] = stpReadHmmModel( fileName 
         
         
     end
+    
+    hmmModel.stateNum = stateNum;
+    hmmModel.probStart = probStart;
+    hmmModel.probTrans = probTrans;
+    hmmModel.probEmit = probEmit;
     
 end
 
