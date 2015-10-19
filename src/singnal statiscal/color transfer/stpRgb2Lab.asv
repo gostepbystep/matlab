@@ -1,0 +1,19 @@
+function [labImg] =  stpRgb2Lab(rgbImg)
+% 将rgb颜色空间转换到lab空间
+    
+    R = rgbImg(:, :, 1);
+    G = rgbImg(:, :, 2);
+    B = rgbImg(:, :, 3);
+    
+    [m, n] = size(R);
+    s = m * n;
+    
+    RGB = [reshape(R, 1, s); reshape(G, 1, s); reshape(B, 1, s)];
+    
+    % RGB to XYZ 
+    MAT = [0.412453 0.357580 0.180423; 
+           0.212671 0.715160 0.072169; 
+           0.019334 0.119193 0.950227]; 
+    XYZ = MAT * RGB; 
+    
+end
