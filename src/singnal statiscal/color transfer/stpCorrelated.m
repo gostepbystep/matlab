@@ -14,6 +14,11 @@ function [ osrgb, otrgb, outImg] = stpCorrelated(spath, tpath)
     srgb = reshape(srgb, sm*sn, 3);
     trgb = reshape(trgb, tm*tn, 3);
     
+%     figure;
+%     plot3(srgb(:, 1), srgb(:, 2), srgb(:, 3), '*');
+%     figure;
+%     plot3(trgb(:, 1), trgb(:, 2), trgb(:, 3), 'o');
+    
     means = mean(srgb);
     meant = mean(trgb);
     
