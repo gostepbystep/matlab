@@ -36,7 +36,7 @@ function [ osrgb, otrgb, outImg] = stpCorrelated(spath, tpath)
     
     tI = [trgb'; ones(1, tm*tn)];
     
-    coef = sT * sR  * sqrt( sS * tS) * tR * tT;
+    coef = sT * sR  * sS * tS * tR * tT;
     I =  coef * tI;
     
     image = reshape(I(1:3, :)', tm, tn, 3);

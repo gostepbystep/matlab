@@ -7,10 +7,10 @@ func = {'stpReinhard'; 'stpCorrelated'};
 strs = {'Reinhard算法'; 'RGB颜色相关性算法'};
 nMothods = length(func);
 
-for i = 2 : nMothods;
-    [ srgb1, trgb1, outImg1] = feval(func{i}, 'data\\1.jpg', 'data\\3.jpg');
-    [ srgb2, trgb2, outImg2] = feval(func{i}, 'data\\6.jpg', 'data\\3.jpg');
-    [ srgb3, trgb3, outImg3] = feval(func{i}, 'data\\11.jpg', 'data\\3.jpg');
+for i = 1 : nMothods;
+    [ srgb1, trgb1, outImg1] = feval(func{i}, 'data\\2.jpg', 'data\\10.jpg');
+    [ srgb2, trgb2, outImg2] = feval(func{i}, 'data\\5.jpg', 'data\\10.jpg');
+    [ srgb3, trgb3, outImg3] = feval(func{i}, 'data\\9.jpg', 'data\\10.jpg');
     
     % 绘图
     figure;  subplot(3, 3, 1); imshow(srgb1);
