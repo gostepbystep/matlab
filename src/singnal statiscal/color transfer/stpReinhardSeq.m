@@ -38,6 +38,10 @@ function [ otrgb, outImg] = stpReinhardSeq(spaths, tpath, N, M)
         [vCoef(i, 1), vCoef(i, 2), vCoef(i, 3)] = stpParabola(1, sstd(1, i), M, sstd(2, i), N, sstd(3, i));
     end
     
+    %% »æÖÆÇúÏß
+    figure;
+    stpPlotParabola(uCoef(1, 1), b, c, sp, color)
+    
     dtlab(:, :, 1) = dtlab(:, :, 1) - tmean(1);
     dtlab(:, :, 2) = dtlab(:, :, 2) - tmean(2);
     dtlab(:, :, 3) = dtlab(:, :, 3) - tmean(3);

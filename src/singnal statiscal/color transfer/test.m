@@ -9,9 +9,9 @@ nMothods = length(func);
 
 for i = 1 : nMothods;
     
-    [ srgb1, trgb1, outImg1] = feval(func{i}, 'data\\7.jpg', 'data\\10.jpg');
-    [ srgb2, trgb2, outImg2] = feval(func{i}, 'data\\13.jpg', 'data\\10.jpg');
-    [ srgb3, trgb3, outImg3] = feval(func{i}, 'data\\6.jpg', 'data\\10.jpg');
+    [ srgb1, trgb1, outImg1] = feval(func{i}, 'data\\2.jpg', 'data\\10.jpg');
+    [ srgb2, trgb2, outImg2] = feval(func{i}, 'data\\4.jpg', 'data\\3.jpg');
+    [ srgb3, trgb3, outImg3] = feval(func{i}, 'data\\19.jpg', 'data\\22.jpg');
     
     % »æÍ¼
     figure;  stpSubPlot(3, 3, 1); imshow(srgb1);
